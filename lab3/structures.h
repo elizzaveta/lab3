@@ -34,3 +34,36 @@ struct Stack {
 	}
 
 };
+struct Queqe {
+	int point;
+	int* elems;
+
+	Queqe(int n) {
+		point = -1;
+		elems = new int[n];
+	}
+	~Queqe() {
+		point = -1;
+		delete[] elems;
+	}
+
+	void enqueue(int d) {
+		point++;
+		elems[point] = d;
+	}
+	int dequeue() {
+		int d = elems[0];
+		for (int i = 0; i < point; i++) {
+			elems[i] = elems[i + 1];
+		}
+		point--;
+		return d;
+	}
+	int size() {
+		return point + 1;
+	}
+	void clear() {
+		point = -1;
+	}
+
+};
