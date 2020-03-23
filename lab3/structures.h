@@ -14,11 +14,11 @@ struct Stack {
 		delete[] elems;
 	}
 
-	void push(int d) {
+	void push(double d) {
 		point++;
 		elems[point] = d;
 	}
-	int pop() {
+	double pop() {
 		point--;
 		return elems[point + 1];
 	}
@@ -26,7 +26,7 @@ struct Stack {
 		point--;
 	}
 
-	int back() {
+	double back() {
 		return elems[point];
 	}
 	int size() {
@@ -37,25 +37,25 @@ struct Stack {
 	}
 
 };
-struct Queqe {
+struct Queue {
 	int point;
 	char* elems;
 
-	Queqe(int n) {
+	Queue(int n) {
 		point = -1;
 		elems = new char[n];
 	}
-	~Queqe() {
+	~Queue() {
 		point = -1;
 		delete[] elems;
 	}
 
-	void enqueue(int d) {
+	void enqueue(double d) {
 		point++;
 		elems[point] = d;
 	}
-	int dequeue() {
-		int d = elems[0];
+	double dequeue() {
+		double d = elems[0];
 		for (int i = 0; i < point; i++) {
 			elems[i] = elems[i + 1];
 		}
