@@ -68,3 +68,47 @@ int prior(char d) {
 	case '-':return 1; break;
 	}
 }
+
+int calculate_result(string postfix) {
+	Stack stek(postfix.length());
+	for (int i = 0; i < postfix.length(); i++) {
+		char token = postfix[i];
+		if (isdigit(token)) {
+			stek.push(token);
+		}
+		else if (token =='+') {
+			int second = stek.pop();
+			int first = stek.pop();
+			int sum = first + second;
+			stek.push(sum);
+		}
+		else if (token == '-') {
+			int second = stek.pop();
+			int first = stek.pop();
+			int dif = first - second;
+			stek.push(dif);
+		}
+		else if (token == '*') {
+			int second = stek.pop();
+			int first = stek.pop();
+			int comp = first * second;
+			stek.push(comp);
+		}
+		else if (token == '/') {
+			int second = stek.pop();
+			int first = stek.pop();
+			int quot = round((first / second) * 100) / 100;
+			stek.push(quot);
+		}
+		else if (token == '^') {
+			int second = stek.pop();
+			int first = stek.pop();
+			int pow = first;
+			for (int i = 0; i < second; i++) {
+				pow *= first;
+			}
+			stek.push(pow);
+		}
+	}
+	return stek.back();
+}
