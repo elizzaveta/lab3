@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "func.h"
 #include "structures.h"
 
@@ -17,7 +18,7 @@ string arguments(int argc, char* argv[]) {
 //to convert infix to postfix notation
 string to_postfix(string expr) {
 	Stack stek(expr.length());
-	Queqe qu(expr.length());
+	Queue qu(expr.length());
 	for (int i = 0; i < expr.length(); i++) {
 		char token = expr[i];
 		if (isdigit(token)) {
@@ -49,7 +50,7 @@ string to_postfix(string expr) {
 	return postfix;
 }
 
-string qu_to_str(Queqe qu) {
+string qu_to_str(Queue qu) {
 	string result = "";
 	while (qu.size() != 0) {
 		result += qu.dequeue();
@@ -66,5 +67,54 @@ int prior(char d) {
 	case '/':return 2; break;
 	case '+':return 1; break;
 	case '-':return 1; break;
+	case '^':return 3; break;
 	}
+}
+
+double calculate_result(string postfix) {
+	Stack stek(postfix.length());
+	for (int i = 0; i < postfix.length(); i++) {
+		char token = postfix[i];
+		stringstream ss;
+		ss << (char)token;
+		if (isdigit(token)) {
+			double s;
+			ss >> s;
+			stek.push(s);
+		}
+		else if (token == '+') {
+			double second = stek.pop();
+			double first = stek.pop();
+			double sum = first + second;
+			stek.push(sum);
+		}
+		else if (token == '-') {
+			double second = stek.pop();
+			double first = stek.pop();
+			double dif = first - second;
+			stek.push(dif);
+		}
+		else if (token == '*') {
+			double second = stek.pop();
+			double first = stek.pop();
+			double comp = first * second;
+			stek.push(comp);
+		}
+		else if (token == '/') {
+			double second = stek.pop();
+			double first = stek.pop();
+			double quot = first / second;
+			stek.push(quot);
+		}
+		else if (token == '^') {
+			double second = stek.pop();
+			double first = stek.pop();
+			double pow = first;
+			for (int i = 0; i < second; i++) {
+				pow *= first;
+			}
+			stek.push(pow);
+		}
+	}
+	return stek.back();
 }
