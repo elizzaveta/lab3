@@ -3,11 +3,11 @@
 
 struct Stack {
 	int point;
-	int* elems;
+	char* elems;
 
 	Stack(int n) {
 		point = -1;
-		elems = new int[n];
+		elems = new char[n];
 	}
 	~Stack() {
 		point = -1;
@@ -21,6 +21,9 @@ struct Stack {
 	int pop() {
 		point--;
 		return elems[point + 1];
+	}
+	void remove() {
+		point--;
 	}
 
 	int back() {
@@ -36,11 +39,11 @@ struct Stack {
 };
 struct Queqe {
 	int point;
-	int* elems;
+	char* elems;
 
 	Queqe(int n) {
 		point = -1;
-		elems = new int[n];
+		elems = new char[n];
 	}
 	~Queqe() {
 		point = -1;
