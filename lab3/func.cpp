@@ -16,25 +16,35 @@ string arguments(int argc, char* argv[]) {
 }
 
 //to convert infix to postfix notation
-string to_postfix(string expr) {
+string* to_postfix(string expr) {
 	Stack stek(expr.length());
 	Queue qu(expr.length());
 	for (int i = 0; i < expr.length(); i++) {
 		char token = expr[i];
+		stringstream str;
+		str << token;
+		string token2;
+		str >> token2;
 		if (isdigit(token)) {
-			qu.enqueue(token);
+			int  j = i + 1;
+			while (isdigit(expr[j])) {
+				j++;
+			}
+			string token1 = expr.substr(i, j - i);
+			i = j-1;
+			qu.enqueue(token1);
 		}
 		else if((token!='(')&&(token!=')')){
-			while ((stek.point != -1) && (stek.back() != '(') && (prior(stek.back()) >= prior(token))) {
+			while ((stek.point != -1) && (stek.back() != "(") && (prior(stek.back()) >= prior(token))) {
 				qu.enqueue(stek.pop());
 			}
-			stek.push(token);
+			stek.push(token2);
 		}
 		else if (token == '(') {
-			stek.push(token);
+			stek.push(token2);
 		}
 		else if (token == ')'){
-			while (stek.back() != '(') {
+			while (stek.back() != "(") {
 				qu.enqueue(stek.pop());
 			}
 			stek.remove();
@@ -43,9 +53,11 @@ string to_postfix(string expr) {
 	while (stek.size() != 0) {
 		qu.enqueue(stek.pop());
 	}
-	string postfix = "";
+	string *postfix = new string[expr.length()];
+	int i = 0;
 	while (qu.size() != 0) {
-		postfix += qu.dequeue();
+		postfix[i] = qu.dequeue();
+		i++;
 	}
 	return postfix;
 }
@@ -58,8 +70,6 @@ string qu_to_str(Queue qu) {
 	return result;
 }
 
-
-
 int prior(char d) {
 	switch (d)
 	{
@@ -71,50 +81,75 @@ int prior(char d) {
 	}
 }
 
-double calculate_result(string postfix) {
-	Stack stek(postfix.length());
-	for (int i = 0; i < postfix.length(); i++) {
-		char token = postfix[i];
-		stringstream ss;
-		ss << (char)token;
-		if (isdigit(token)) {
-			double s;
-			ss >> s;
-			stek.push(s);
+int prior(string d) {
+
+	if (d == "*") { return 2; }
+	if (d == "*") { return 2; }
+	if (d == "+") { return 1; }
+	if (d == "-") { return 1; }
+	if (d == "^") { return 3; }
+
+}
+
+double calculate_result(string* postfix, int l) {
+	Stack stek(l);
+	for (int i = 0; i < l; i++) {
+		string token = postfix[i];
+		if (ifdigit(token)) {
+			stek.push(token);
 		}
-		else if (token == '+') {
-			double second = stek.pop();
-			double first = stek.pop();
+		else if (token == "+") {
+			double second = atoi(stek.pop().c_str());
+			double first = atoi(stek.pop().c_str());
 			double sum = first + second;
-			stek.push(sum);
+			cout << sum << endl;
+			stek.push(to_string(sum));
 		}
-		else if (token == '-') {
-			double second = stek.pop();
-			double first = stek.pop();
+		else if (token == "-") {
+			double second = atoi(stek.pop().c_str());
+			double first = atoi(stek.pop().c_str());
 			double dif = first - second;
-			stek.push(dif);
+			cout << dif << endl;
+			stek.push(to_string(dif));
 		}
-		else if (token == '*') {
-			double second = stek.pop();
-			double first = stek.pop();
+		else if (token == "*") {
+			double second = atoi(stek.pop().c_str());
+			double first = atoi(stek.pop().c_str());
 			double comp = first * second;
-			stek.push(comp);
+			stek.push(to_string(comp));
 		}
-		else if (token == '/') {
-			double second = stek.pop();
-			double first = stek.pop();
+		else if (token == "/") {
+			double second = atoi(stek.pop().c_str());
+			double first = atoi(stek.pop().c_str());
 			double quot = first / second;
-			stek.push(quot);
+			stek.push(to_string(quot));
 		}
-		else if (token == '^') {
-			double second = stek.pop();
-			double first = stek.pop();
+		else if (token == "^") {
+			double second = atoi(stek.pop().c_str());
+			double first = atoi(stek.pop().c_str());
 			double pow = first;
 			for (int i = 0; i < second; i++) {
 				pow *= first;
 			}
-			stek.push(pow);
+			stek.push(to_string(pow));
 		}
 	}
-	return stek.back();
+	string se = stek.pop();
+	cout << se << "jk" << endl;
+	return 0;
+}
+
+bool ifdigit(string a) {
+	int c = 0;
+	for (int i = 0; i < a.length(); i++) {
+		char m = a[i];
+		if (!isdigit(m)) { c++; }
+	}
+	if (c == 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+	
 }
