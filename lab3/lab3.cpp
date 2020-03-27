@@ -10,10 +10,16 @@ int main(int argc, char* argv[])
     std::cout << "Hello World!\n";
 
     //some test code
-    string s = "1+2*4+1";
-    string p = to_postfix(s);
-    cout << p << endl;
-    double r = calculate_result(p);
+    string s = "13+2-4";
+    cout << s << endl;
+    string* p = to_postfix(s);
+    for (int i = 0; i < s.length(); i++) {
+        cout << p[i] << " ";
+    }
+    cout << endl;
+    double r = calculate_result(p, s.length());
     cout << r;
+
+    
     
 }
