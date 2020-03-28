@@ -12,3 +12,5 @@ int prior(char);
 string qu_to_str(Queue);
 double calculate_result(string*, int);
 bool ifdigit(string);
+bool check_operation(char);
+bool check_negative(char, string, int);

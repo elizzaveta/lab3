@@ -34,6 +34,17 @@ string* to_postfix(string expr) {
 			i = j-1;
 			qu.enqueue(token1);
 		}
+		else if (check_negative(token, expr, i))
+		{
+			token = expr[i + 1];
+			int  j = i + 2;
+			while (isdigit(expr[j])) {
+				j++;
+			}
+			string token1 = expr.substr(i, j - i);
+			i = j - 1;
+			qu.enqueue(token1);
+		}
 		else if((token!='(')&&(token!=')')){
 			while ((stek.point != -1) && (stek.back() != "(") && (prior(stek.back()) >= prior(token))) {
 				qu.enqueue(stek.pop());
@@ -96,12 +107,12 @@ double calculate_result(string* postfix, int l) {
 	double a = 0;
 	for (int i = 0; i < l; i++) {
 		string token = postfix[i];
-		if (ifdigit(token)) {
+		if (ifdigit(token)||((token.length() > 1)&&(token[i]=='-'))) {
 			stek.push(token);
 		}
 		else if (token == "+") {
-			double second = strtod(stek.pop().c_str(), 0);
-			double first = strtod(stek.pop().c_str(), 0);
+			double second = atof(stek.pop().c_str());
+			double first = atof(stek.pop().c_str());
 			double sum = first + second;
 			stek.push(to_string(sum));
 		}
@@ -153,4 +164,19 @@ bool ifdigit(string a) {
 		return false;
 	}
 	
+}
+bool check_operation(char token)
+{
+	if (token == '+' || token == '-' || token == '+' || token == '*' || token == '^' || token == '(')
+		return true;
+	else
+		return false;
+}
+bool check_negative(char token, string elem, int i)
+{
+
+	if (token == '-' && (i == 0 || (i != 0 && (check_operation(elem[i - 1])))))
+		return true;
+	else
+		return false;
 }
