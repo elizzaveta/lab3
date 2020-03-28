@@ -93,50 +93,51 @@ int prior(string d) {
 
 double calculate_result(string* postfix, int l) {
 	Stack stek(l);
+	double a = 0;
 	for (int i = 0; i < l; i++) {
 		string token = postfix[i];
 		if (ifdigit(token)) {
 			stek.push(token);
 		}
 		else if (token == "+") {
-			double second = atoi(stek.pop().c_str());
-			double first = atoi(stek.pop().c_str());
+			double second = strtod(stek.pop().c_str(), 0);
+			double first = strtod(stek.pop().c_str(), 0);
 			double sum = first + second;
-			cout << sum << endl;
 			stek.push(to_string(sum));
 		}
 		else if (token == "-") {
-			double second = atoi(stek.pop().c_str());
-			double first = atoi(stek.pop().c_str());
+			double second = strtod(stek.pop().c_str(), 0);
+			double first = strtod(stek.pop().c_str(), 0);
 			double dif = first - second;
-			cout << dif << endl;
 			stek.push(to_string(dif));
 		}
 		else if (token == "*") {
-			double second = atoi(stek.pop().c_str());
-			double first = atoi(stek.pop().c_str());
+			double second = strtod(stek.pop().c_str(), 0);
+			double first = strtod(stek.pop().c_str(), 0);
 			double comp = first * second;
 			stek.push(to_string(comp));
 		}
 		else if (token == "/") {
-			double second = atoi(stek.pop().c_str());
-			double first = atoi(stek.pop().c_str());
+			double second = strtod(stek.pop().c_str(), 0);
+			double first = strtod(stek.pop().c_str(), 0);
 			double quot = first / second;
 			stek.push(to_string(quot));
 		}
 		else if (token == "^") {
-			double second = atoi(stek.pop().c_str());
-			double first = atoi(stek.pop().c_str());
+			double second = strtod(stek.pop().c_str(), 0);
+			double first = strtod(stek.pop().c_str(), 0);
 			double pow = first;
-			for (int i = 0; i < second; i++) {
+			for (int i = 0; i < second-1; i++) {
 				pow *= first;
 			}
 			stek.push(to_string(pow));
 		}
+		if (stek.back() != "")
+		{
+			a = strtod(stek.back().c_str(),0);
+		}
 	}
-	string se = stek.pop();
-	cout << se << "jk" << endl;
-	return 0;
+	return a;
 }
 
 bool ifdigit(string a) {
