@@ -19,4 +19,4 @@ string subtraction(Stack&);
 string multiplication(Stack&);
 string division(Stack&);
 string power(Stack&);
-int n_tokens(string*);
+int n_tokens(string*, string);

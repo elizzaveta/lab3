@@ -7,21 +7,13 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-    std::cout << "Hello World!\n";
+   
 
-    //some test code
-    cout << "Input your string" << endl;
-    string s;
-    cin >> s;
+    string s = arguments(argc, argv);
     string* p = to_postfix(s);
-    int k = n_tokens(p);
-    //for (int i = 0; i < s.length(); i++) {
-    //    cout << p[i] << " ";
-    //    if (p[i] != "")
-    //        k++;
-    //}
+    int k = n_tokens(p, s);
     double r = calculate_result(p, k);
-    cout << r;
+    cout << "Result: " << r;
 
     
     
