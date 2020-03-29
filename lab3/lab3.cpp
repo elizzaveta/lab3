@@ -11,15 +11,15 @@ int main(int argc, char* argv[])
 
     //some test code
     cout << "Input your string" << endl;
-    string s = "13+2-4";
+    string s;
     cin >> s;
-    int k = 0;
     string* p = to_postfix(s);
-    for (int i = 0; i < s.length(); i++) {
-        cout << p[i] << " ";
-        if (p[i] != "")
-            k++;
-    }
+    int k = n_tokens(p);
+    //for (int i = 0; i < s.length(); i++) {
+    //    cout << p[i] << " ";
+    //    if (p[i] != "")
+    //        k++;
+    //}
     double r = calculate_result(p, k);
     cout << r;
 
