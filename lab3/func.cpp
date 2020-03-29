@@ -206,10 +206,11 @@ string power(Stack& stek)
 	s = to_string(pow);
 	return s;
 }
-int n_tokens(string* p)
+
+int n_tokens(string* p, string s)
 {
 	int k = 0;
-	for (int i = 0; i < sizeof(p); i++) {
+	for (int i = 0; i < s.length(); i++) {
 		if (p[i] != "")
 			k++;
 		else

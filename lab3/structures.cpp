@@ -1,10 +1,11 @@
 #include <string>
 using namespace std;
 
-struct Stack {
+class Stack {
 	int point;
 	string* elems;
 
+public:
 	Stack(int n) {
 		point = -1;
 		elems = new string[n];
@@ -14,13 +15,13 @@ struct Stack {
 		delete[] elems;
 	}
 
-	void push(double d) {
+	void push(string d) {
 		point++;
 		elems[point] = d;
 	}
 	string pop() {
 		point--;
-		return elems[point + 1];
+		return string(elems[point + 1]);
 	}
 	void remove() {
 		point--;
@@ -37,10 +38,11 @@ struct Stack {
 	}
 
 };
-struct Queue {
+class Queue {
 	int point;
 	string* elems;
 
+public:
 	Queue(double n) {
 		point = -1;
 		elems = new string[n];
@@ -50,7 +52,7 @@ struct Queue {
 		delete[] elems;
 	}
 
-	void enqueue(double d) {
+	void enqueue(string d) {
 		point++;
 		elems[point] = d;
 	}

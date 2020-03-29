@@ -2,10 +2,11 @@
 #include <string>
 using namespace std;
 
-struct Stack {
+class Stack {
 	int point;
 	string* elems;
 
+public:
 	Stack(int n) {
 		point = -1;
 		elems = new string[n];
@@ -38,10 +39,11 @@ struct Stack {
 	}
 
 };
-struct Queue {
+class Queue {
 	int point;
 	string* elems;
 
+public:
 	Queue(double n) {
 		point = -1;
 		elems = new string[n];
