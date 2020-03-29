@@ -21,7 +21,7 @@ struct Stack {
 	}
 	string pop() {
 		point--;
-		return elems[point + 1];
+		return string(elems[point+1]);
 	}
 	void remove() {
 		point--;

@@ -10,14 +10,17 @@ int main(int argc, char* argv[])
     std::cout << "Hello World!\n";
 
     //some test code
-    string s = "13+2-4";
-    cout << s << endl;
+    cout << "Input your string" << endl;
+    string s;
+    cin >> s;
     string* p = to_postfix(s);
-    for (int i = 0; i < s.length(); i++) {
-        cout << p[i] << " ";
-    }
-    cout << endl;
-    double r = calculate_result(p, s.length());
+    int k = n_tokens(p);
+    //for (int i = 0; i < s.length(); i++) {
+    //    cout << p[i] << " ";
+    //    if (p[i] != "")
+    //        k++;
+    //}
+    double r = calculate_result(p, k);
     cout << r;
 
     

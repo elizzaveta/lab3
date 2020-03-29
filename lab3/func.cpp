@@ -34,6 +34,17 @@ string* to_postfix(string expr) {
 			i = j-1;
 			qu.enqueue(token1);
 		}
+		else if (check_negative(token, expr, i))
+		{
+			token = expr[i + 1];
+			int  j = i + 2;
+			while (isdigit(expr[j])) {
+				j++;
+			}
+			string token1 = expr.substr(i, j - i);
+			i = j - 1;
+			qu.enqueue(token1);
+		}
 		else if((token!='(')&&(token!=')')){
 			while ((stek.point != -1) && (stek.back() != "(") && (prior(stek.back()) >= prior(token))) {
 				qu.enqueue(stek.pop());
@@ -96,47 +107,20 @@ double calculate_result(string* postfix, int l) {
 	double a = 0;
 	for (int i = 0; i < l; i++) {
 		string token = postfix[i];
-		if (ifdigit(token)) {
+		if (ifdigit(token)||(token.length() > 1))
 			stek.push(token);
-		}
-		else if (token == "+") {
-			double second = strtod(stek.pop().c_str(), 0);
-			double first = strtod(stek.pop().c_str(), 0);
-			double sum = first + second;
-			stek.push(to_string(sum));
-		}
-		else if (token == "-") {
-			double second = strtod(stek.pop().c_str(), 0);
-			double first = strtod(stek.pop().c_str(), 0);
-			double dif = first - second;
-			stek.push(to_string(dif));
-		}
-		else if (token == "*") {
-			double second = strtod(stek.pop().c_str(), 0);
-			double first = strtod(stek.pop().c_str(), 0);
-			double comp = first * second;
-			stek.push(to_string(comp));
-		}
-		else if (token == "/") {
-			double second = strtod(stek.pop().c_str(), 0);
-			double first = strtod(stek.pop().c_str(), 0);
-			double quot = first / second;
-			stek.push(to_string(quot));
-		}
-		else if (token == "^") {
-			double second = strtod(stek.pop().c_str(), 0);
-			double first = strtod(stek.pop().c_str(), 0);
-			double pow = first;
-			for (int i = 0; i < second-1; i++) {
-				pow *= first;
-			}
-			stek.push(to_string(pow));
-		}
-		if (stek.back() != "")
-		{
-			a = strtod(stek.back().c_str(),0);
-		}
+		else if (token == "+")
+			stek.push(addition(stek));
+		else if (token == "-")
+			stek.push(subtraction(stek));
+		else if (token == "*")
+			stek.push(multiplication(stek));
+		else if (token == "/")
+			stek.push(division(stek));
+		else if (token == "^")
+			stek.push(power(stek));
 	}
+	a = stod(stek.back());
 	return a;
 }
 
@@ -153,4 +137,83 @@ bool ifdigit(string a) {
 		return false;
 	}
 	
+}
+bool check_operation(char token)
+{
+	if (token == '+' || token == '-' || token == '+' || token == '*' || token == '^' || token == '('||token=='/')
+		return true;
+	else
+		return false;
+}
+bool check_negative(char token, string elem, int i)
+{
+
+	if (token == '-' && (i == 0 || (i != 0 && (check_operation(elem[i - 1])))))
+		return true;
+	else
+		return false;
+}
+string addition(Stack &stek)
+{
+	string s = stek.pop();
+	double second = stod(s);
+	s = stek.pop();
+	double first = stod(s);
+	double sum = first + second;
+	s = to_string(sum);
+	return s;
+}
+string subtraction(Stack& stek)
+{
+	string s = stek.pop();
+	double second = stod(s);
+	s = stek.pop();
+	double first = stod(s);
+	double dif = first - second;
+	s = to_string(dif);
+	return s;
+}
+string multiplication(Stack& stek)
+{
+	string s = stek.pop();
+	double second = stod(s);
+	s = stek.pop();
+	double first = stod(s);
+	double comp = first * second;
+	s = to_string(comp);
+	return s;
+}
+string division(Stack& stek)
+{
+	string s = stek.pop();
+	double second = stod(s);
+	s = stek.pop();
+	double first = stod(s);
+	double quot = first / second;
+	s = to_string(quot);
+	return s;
+}
+string power(Stack& stek)
+{
+	string s = stek.pop();
+	double second = stod(s);
+	s = stek.pop();
+	double first = stod(s);
+	double pow = first;
+	for (int i = 0; i < second - 1; i++) {
+		pow *= first;
+	}
+	s = to_string(pow);
+	return s;
+}
+int n_tokens(string* p)
+{
+	int k = 0;
+	for (int i = 0; i < sizeof(p); i++) {
+		if (p[i] != "")
+			k++;
+		else
+			break;
+	}
+	return k;
 }
