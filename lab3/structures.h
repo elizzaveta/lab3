@@ -16,6 +16,9 @@ public:
 		delete[] elems;
 	}
 
+	int getPoint() {
+		return point;
+	}
 	void push(string d) {
 		point++;
 		elems[point] = d;

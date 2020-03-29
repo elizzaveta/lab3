@@ -46,7 +46,7 @@ string* to_postfix(string expr) {
 			qu.enqueue(token1);
 		}
 		else if((token!='(')&&(token!=')')){
-			while ((stek.point != -1) && (stek.back() != "(") && (prior(stek.back()) >= prior(token))) {
+			while ((stek.getPoint() != -1) && (stek.back() != "(") && (prior(stek.back()) >= prior(token))) {
 				qu.enqueue(stek.pop());
 			}
 			stek.push(token2);
